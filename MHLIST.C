@@ -435,6 +435,7 @@ static void SelectFile(WINDOW wnd)
 /* --- open a document window and load a file --- */
 static void OpenPadWindow(WINDOW wnd, char *FileName,char *NewFileName)
 {
+    static WINDOW wnd0 = NULL; // check list window
     static WINDOW wnd1 = NULL;
     struct stat sb;
     char *Fname = FileName, *ermsg;

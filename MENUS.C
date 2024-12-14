@@ -112,13 +112,13 @@ DEFMENU(MainMenu)
     ENDPOPDOWN
 
     /* --------------- the Help popdown menu ----------------*/
-    POPDOWN( "~Help", NULL, "Get help...really." )
+    POPDOWN( "~Help", NULL, "Get help...really." )              // LOL --sparky4
         SELECTION(  "~Help for help...",  ID_HELPHELP,  0, 0 )
         SELECTION(  "~Extended help...",  ID_EXTHELP,   0, 0 )
         SELECTION(  "~Keys help...",      ID_KEYSHELP,  0, 0 )
         SELECTION(  "Help ~index...",     ID_HELPINDEX, 0, 0 )
         SEPARATOR
-        SELECTION(  "~About Edit...",          ID_ABOUT,     0, 0 )
+        SELECTION(  "~About Menhera List...",          ID_ABOUT,     0, 0 )
         SELECTION(  "~About DFlat+...",          ID_ABOUTDFP,     0, 0 )
     ENDPOPDOWN
 
