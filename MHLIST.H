@@ -12,7 +12,6 @@
 
 #include "resource.h"
 //#define INCLUDE_LOGGING
-//#define NEWLOG
 
 
 extern WINDOW EditApplication;

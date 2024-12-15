@@ -186,6 +186,8 @@ int DfpMain(int argc, char *argv[])
     LoadHelpFile(DFlatApplication);
     SendMessage(EditApplication, SETFOCUS, TRUE, 0);
 
+
+
     /*  Load the files from args - if the file does not exist, open a new
         window.... */
     for (index=0;index<n_files;index++)
@@ -435,7 +437,103 @@ static void SelectFile(WINDOW wnd)
 /* --- open a document window and load a file --- */
 static void OpenPadWindow(WINDOW wnd, char *FileName,char *NewFileName)
 {
-    static WINDOW wnd0 = NULL; // check list window
+    static WINDOW wnd1 = NULL;
+    struct stat sb;
+    char *Fname = FileName, *ermsg;
+
+    if (strcmp(FileName, Untitled))
+        {
+	if (stat(FileName, &sb))
+            {
+	    ermsg = DFmalloc(strlen(FileName)+20);
+	    strcpy(ermsg, "No such file:\n");
+	    strcat(ermsg, FileName);
+	    ErrorMessage(ermsg);
+	    free(ermsg);
+	    return;
+            }
+
+	Fname = NameComponent(FileName);
+
+        /* check file size */
+        if (sb.st_size > 64000UL)
+            {
+            ermsg = DFmalloc(strlen(FileName)+100); /* alloc fixed 0.7a */
+	    strcpy(ermsg, "File too large for this version of Edit:\n");
+	    strcat(ermsg, FileName);
+	    ErrorMessage(ermsg);
+	    free(ermsg);
+	    return;
+            }
+
+        } /* actual filename given */
+
+    wndpos += 2;
+    if (NewFileName != NULL)
+        Fname = NameComponent(NewFileName);
+
+    if (wndpos == 20)
+        wndpos = 2;
+
+    wnd1 = CreateWindow(EDITBOX,
+		Fname,
+		(wndpos-1)*2, wndpos, 10, 40,
+		NULL, wnd, EditorProc,
+		SHADOW     |
+		MINMAXBOX  |
+		CONTROLBOX |
+		VSCROLLBAR |
+		HSCROLLBAR |
+		MOVEABLE   |
+		HASBORDER  |
+		SIZEABLE   |
+                MULTILINE);
+
+    if (cfg.ReadOnlyMode)		/* new feature in 0.7b */
+        AddAttribute(wnd1, READONLY);
+        /* needed because ReadOnlyMode must not make ALL text */
+        /* entry fields read only, only EDITBOXes become r/o! */
+
+    /* suggested code change to ix saveas bug -
+       contrib: James Sandys-Lumsdaine
+
+    OLD CODE SEGMENT!
+
+    if (strcmp(FileName, Untitled))    {
+	wnd1->extension = DFmalloc(strlen(FileName)+1);
+	strcpy(wnd1->extension, FileName);
+	LoadFile(wnd1);
+    }
+
+    NEW CODE SEGMENT!
+    */
+
+    if (NewFileName != NULL)
+        {
+	/* Either a command line new file or one that's on the
+	disk to load - Either way, must set the extension
+	to the given filename */
+
+	wnd1->extension = DFmalloc(strlen(NewFileName) + 1);
+	strcpy(wnd1->extension,NewFileName);
+        }
+    else
+        {
+        if (strcmp(FileName,Untitled))
+            wnd1->extension = DFmalloc(strlen(FileName)+1);
+
+	strcpy(wnd1->extension, FileName);
+	LoadFile(wnd1); /* Only load if not a new file */
+        }
+
+    SendMessage(wnd1, SETFOCUS, TRUE, 0);
+    SendMessage(wnd1, MAXIMIZE, 0, 0);
+
+}
+
+/* --- load checklist --- */
+static void OpenCheckListWindow(WINDOW wnd, char *FileName,char *NewFileName)
+{
     static WINDOW wnd1 = NULL;
     struct stat sb;
     char *Fname = FileName, *ermsg;

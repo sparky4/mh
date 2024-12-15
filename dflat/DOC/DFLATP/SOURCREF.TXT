@@ -10,7 +10,7 @@
 
    Version  : 1.00
    Last edit: 2007-12-29 (ASM)
-   Size     : 
+   Size     :
 
   ===========================================================================
 
@@ -25,11 +25,11 @@
    1.- Compiling DFlat+
    2.- Source files
    3.- Class chart
-   
-   
+
+
    1.- Compiling DFlat+
    =====================
-   
+
 DFlat+ can be dual compiled with either a Borland C (Borland C/C++, TurboC/C++)
 or the Open Watcom C/C++ compiler.
 
@@ -40,7 +40,7 @@ Before you can use the included BUILD utility, you must:
    2.- Check that you have a MAKE utility installed (OWC brings one).
    3.- Tune the MAKEFILE (DFLATP.MAK or DFLATP.WMK)
    4.- Tune the BUILD utility (BUILD.BAT)
-   
+
 In order to tune the MAKEFILE, you must edit the initial entries of the file
 (Programmer Customizable Values section), including paths to where your tools
 are.
@@ -148,17 +148,17 @@ User interface sources:
   DIRECT.C      - Common dialogs helper for directory retrieval
   CLIPBRD.C     - Clipboard routines
   SYSHELP.C     - Help routines installation hook
-  
+
 
 DFlat+ Resources:
   SYSTEMRS.RS   - System resources: system menu, common dialogs, etc.
 
 User interface classes (see next section):
-  
+
 
    3.- CLASSCHART
    ==============
-   
+
                        -------------
                        | NORMAL    |
                        | (normal.c)|
@@ -190,7 +190,7 @@ User interface classes (see next section):
   |POPDOWNMENU|     |SPINBUTTON  |                              |COMBOBOX     |
   |(popdown.c)|     |(spinbutt.c)|                              |(combobox.c) |
   -------------     --------------                              ---------------
-  
+
 
 
 (Inproper classes: DUMMY, TITLEBAR, HELPBOX)
